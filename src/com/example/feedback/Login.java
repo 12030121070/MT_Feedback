@@ -1,8 +1,11 @@
 package com.example.feedback;
 
+
 import android.app.Activity;
-import android.content.Intent;
+import android.content.*;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -11,72 +14,53 @@ import android.widget.Toast;
 
 public class Login extends Activity {
 	
-	private Button login;
+	 private Button login;
 	 private EditText username;
 	 private EditText password;
 	 
-	 
-	
-	
-	
-	
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       setContentView(R.layout.activity_login);
+    	super.onCreate(savedInstanceState);
+    	setContentView(R.layout.activity_login);
         
         
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         login = (Button) findViewById(R.id.login);
-   
     
         OnClickListener listener = new OnClickListener() {
 
 			@Override
 			public void onClick(View x) {
 				
-				if(username.getText().toString()==password.getText().toString())
+				if(username.getText().toString().equals(password.getText().toString()))
 				{
-					
-						
-						
-								
-					 Toast.makeText(getApplicationContext(),(CharSequence) password,Toast.LENGTH_LONG).show();
+					    Toast.makeText(getApplicationContext(),(CharSequence) password.getText().toString(),Toast.LENGTH_LONG).show();
 						
 						Intent feedback = new Intent(getApplicationContext(),Feedback.class);
+						feedback.putExtra("username",(username.getText().toString()));
+						startActivity(feedback);
 						
-						
-						feedback.putExtra("username",username.getText().toString());
-						
-						
-						
+						//Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.vogella.com"));
+						//startActivity(i); 
 				}
-				
-						
-				
-				
-			
-				
 				else
-				{
-					 
-					Toast.makeText(getApplicationContext(),(CharSequence) password,Toast.LENGTH_LONG).show();
-					
-					
-					
+				{ 
+					Toast.makeText(getApplicationContext(),(CharSequence) password.getText().toString(),Toast.LENGTH_LONG).show();
 					Toast.makeText(getApplicationContext(),"Invalid username/password",Toast.LENGTH_LONG).show();
 				}
 			
 			}	
 			
-			};
-
+		};	
+		login.setOnClickListener(listener);
+    } 
     
-    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        //getMenuInflater().inflate(R.menu.login, menu);
+        return true;
     }
-
-
-    
-    
 }
